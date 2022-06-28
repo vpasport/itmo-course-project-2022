@@ -3,7 +3,6 @@ package com.example.todo_kotlin
 import android.os.Bundle
 import android.widget.EditText
 import android.widget.ImageView
-import android.widget.ListView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
@@ -11,32 +10,45 @@ import com.example.todo_kotlin.store.TodoStore
 
 import androidx.arch.core.util.Function
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.todo_kotlin.models.*
 import com.example.todo_kotlin.store.Renderer
-import com.google.android.material.textfield.TextInputEditText
 
 class MainActivity : AppCompatActivity(), Renderer<TodoModel> {
     private lateinit var store: TodoStore
 
-    private lateinit var notFinishedListView: ListView
-    private lateinit var finishedListView: ListView
+    private lateinit var notFinishedListView: RecyclerView
+    private lateinit var finishedListView: RecyclerView
     private lateinit var addButton: ImageView
     private lateinit var addText: EditText
+    private lateinit var rec: RecyclerView
 
     override fun render(model: LiveData<TodoModel>) {
         model.observe(this, Observer { newState ->
-            notFinishedListView.adapter = TodoAdapter(
-                this,
-                (newState?.todos?.filter { !it.finished } ?: listOf()) as ArrayList<Todo>,
-                { todo -> toggleTodo(todo) },
-                { todo -> deleteTodo(todo) }
-            )
-            finishedListView.adapter = TodoAdapter(
-                this,
-                (newState?.todos?.filter { it.finished } ?: listOf()) as ArrayList<Todo>,
-                { todo -> toggleTodo(todo) },
-                { todo -> deleteTodo(todo) }
-            )
+//            notFinishedListView.adapter = TodoAdapter(
+//                this,
+//                (newState?.todos?.filter { !it.finished } ?: listOf()) as ArrayList<Todo>,
+//                { todo -> toggleTodo(todo) },
+//                { todo -> deleteTodo(todo) }
+//            )
+            notFinishedListView.adapter =
+                CustomRecyclerAdapter(
+                    (newState?.todos?.filter { !it.finished }
+                        ?: listOf()) as List<Todo>,
+                    { todo -> toggleTodo(todo) },
+                    { todo -> deleteTodo(todo) })
+            finishedListView.adapter =
+                CustomRecyclerAdapter((newState?.todos?.filter { it.finished }
+                    ?: listOf()) as List<Todo>,
+                    { todo -> toggleTodo(todo) },
+                    { todo -> deleteTodo(todo) })
+//            finishedListView.adapter = TodoAdapter(
+//                this,
+//                (newState?.todos?.filter { it.finished } ?: listOf()) as ArrayList<Todo>,
+//                { todo -> toggleTodo(todo) },
+//                { todo -> deleteTodo(todo) }
+//            )
         })
     }
 
@@ -63,7 +75,9 @@ class MainActivity : AppCompatActivity(), Renderer<TodoModel> {
         setContentView(R.layout.activity_main)
 
         notFinishedListView = findViewById(R.id.notFinishedListView)
+        notFinishedListView.layoutManager = LinearLayoutManager(this)
         finishedListView = findViewById(R.id.finishedListView)
+        finishedListView.layoutManager = LinearLayoutManager(this)
         addButton = findViewById(R.id.addButton)
         addText = findViewById(R.id.addText)
 
@@ -83,9 +97,11 @@ class MainActivity : AppCompatActivity(), Renderer<TodoModel> {
         store.dispatch(AddFinishedTodo("Task 6"))
 
         addButton.setOnClickListener { _ ->
-            store.dispatch(AddTodo(addText.text.toString()))
-            addText.setText("")
-            addText.clearFocus()
+            if (addText.text.toString().isNotEmpty()) {
+                store.dispatch(AddTodo(addText.text.toString()))
+                addText.setText("")
+                addText.clearFocus()
+            }
         }
     }
 }
