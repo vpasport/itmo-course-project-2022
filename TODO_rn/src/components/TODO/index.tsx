@@ -4,13 +4,11 @@ import {
   ScrollView,
   StyleSheet,
   Text,
-  TextInput,
   useColorScheme,
   View,
 } from 'react-native';
 import {Colors} from 'react-native/Libraries/NewAppScreen';
 
-import {Button} from '../';
 import {colors} from '../../theme';
 import {AddTask} from './AddTask';
 import {Task as TaskComponent} from './Task';
@@ -84,7 +82,6 @@ const TODO: React.FC<Props> = () => {
   const styles = useStyles(colorScheme);
 
   const [todos, setTodos] = useState<Array<Task>>(defaultTasks);
-  const [newTodo, setNewTodo] = useState<string>('');
 
   return (
     <ScrollView style={styles.main}>
@@ -119,7 +116,6 @@ const TODO: React.FC<Props> = () => {
       <View style={styles.inputContainer}>
         <AddTask
           onAdd={title => {
-            console.log(title);
             setTodos(prev => [...prev, {title, finish: false}]);
           }}
         />

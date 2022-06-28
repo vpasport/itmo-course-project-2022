@@ -4,17 +4,25 @@ import 'package:todo_flutter/colors.dart';
 import 'colors.dart';
 
 class AddTodo extends StatelessWidget {
-  AddTodo({Key? key, required this.onCreate}) : super(key: key);
+  AddTodo({Key? key, required this.onCreate, required this.isDarkMode})
+      : super(key: key);
 
   TextEditingController titleController = TextEditingController();
 
   final onCreate;
+  final isDarkMode;
+
+  TextStyle? _getTextStyle() {
+    return isDarkMode
+        ? const TextStyle(fontSize: 16, color: Colors.white)
+        : const TextStyle(fontSize: 16, color: Colors.black);
+  }
 
   @override
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-          color: ThemeColors.lightGrey,
+          color: isDarkMode ? ThemeColors.darkGrey : ThemeColors.lightGrey,
           borderRadius: BorderRadius.circular(10)),
       padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
       margin: const EdgeInsets.only(top: 10),
@@ -57,7 +65,7 @@ class AddTodo extends StatelessWidget {
                     hintText: 'Введите название...',
                     hintStyle: TextStyle(color: Colors.grey),
                   ),
-                  style: const TextStyle(fontSize: 16),
+                  style: _getTextStyle(),
                 )),
           ),
         ],

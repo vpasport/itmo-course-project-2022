@@ -42,68 +42,75 @@ class _TodoListState extends State<TodoList> {
     });
   }
 
-  var isDarkMode = false;
-
   bool _isDarkMode() {
-    return SchedulerBinding.instance!.window.platformBrightness == Brightness.dark;
+    return SchedulerBinding.instance!.window.platformBrightness ==
+        Brightness.dark;
   }
 
-
+  TextStyle? _getTextStyle() {
+    return _isDarkMode()
+        ? const TextStyle(
+            fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white)
+        : const TextStyle(
+            fontSize: 20, fontWeight: FontWeight.bold, color: Colors.black);
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: isDarkMode ? ThemeColors.black : ThemeColors.white,
+        backgroundColor: _isDarkMode() ? ThemeColors.black : ThemeColors.white,
         body: SafeArea(
             child: SingleChildScrollView(
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 10),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Text(isDarkMode.toString()),
-            Container(
-                margin: const EdgeInsets.only(left: 10),
-                child: const Text(
-                  'Задачи:',
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                )),
-            ListView(
-              padding: const EdgeInsets.symmetric(vertical: 8.0),
-              physics: const NeverScrollableScrollPhysics(),
-              children: _todos
-                  .where((Task task) => !task.finished)
-                  .map((Task task) => TodoItem(
-                        task: task,
-                        onTaskChanged: _handleChange,
-                        onDeleteTap: _onDeleteTask,
-                      ))
-                  .toList(),
-              shrinkWrap: true,
+          child: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 10),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Container(
+                    margin: const EdgeInsets.only(left: 10),
+                    child: Text(
+                      'Задачи:',
+                      style: _getTextStyle(),
+                    )),
+                ListView(
+                  padding: const EdgeInsets.symmetric(vertical: 8.0),
+                  physics: const NeverScrollableScrollPhysics(),
+                  children: _todos
+                      .where((Task task) => !task.finished)
+                      .map((Task task) => TodoItem(
+                            task: task,
+                            onTaskChange: _handleChange,
+                            onDeleteTap: _onDeleteTask,
+                            isDarkMode: _isDarkMode(),
+                          ))
+                      .toList(),
+                  shrinkWrap: true,
+                ),
+                AddTodo(
+                  onCreate: _onAddTask,
+                  isDarkMode: _isDarkMode(),
+                ),
+                Container(
+                    margin: const EdgeInsets.only(left: 10, top: 20),
+                    child: Text('Выполнено:', style: _getTextStyle())),
+                ListView(
+                  padding: const EdgeInsets.symmetric(vertical: 8.0),
+                  physics: const NeverScrollableScrollPhysics(),
+                  children: _todos
+                      .where((Task task) => task.finished)
+                      .map((Task task) => TodoItem(
+                            task: task,
+                            onTaskChange: _handleChange,
+                            onDeleteTap: _onDeleteTask,
+                            isDarkMode: _isDarkMode(),
+                          ))
+                      .toList(),
+                  shrinkWrap: true,
+                ),
+              ],
             ),
-            AddTodo(onCreate: _onAddTask),
-            Container(
-                margin: const EdgeInsets.only(left: 10),
-                child: const Text('Выполнено:',
-                    style:
-                        TextStyle(fontSize: 20, fontWeight: FontWeight.bold))),
-            ListView(
-              padding: const EdgeInsets.symmetric(vertical: 8.0),
-              physics: const NeverScrollableScrollPhysics(),
-              children: _todos
-                  .where((Task task) => task.finished)
-                  .map((Task task) => TodoItem(
-                        task: task,
-                        onTaskChanged: _handleChange,
-                        onDeleteTap: _onDeleteTask,
-                      ))
-                  .toList(),
-              shrinkWrap: true,
-            ),
-          ],
-        ),
-      ),
-    )));
+          ),
+        )));
   }
 }
 

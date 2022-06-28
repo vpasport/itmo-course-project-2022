@@ -22,17 +22,6 @@ const useStyles = (theme: ColorSchemeName) =>
       color: theme === 'dark' ? colors.white : colors.black,
       textAlignVertical: 'center',
     },
-    checkbox: {
-      width: 30,
-      height: 30,
-      borderColor: colors.grey,
-      borderWidth: 2,
-      borderRadius: 10,
-    },
-    checkboxChecked: {
-      backgroundColor: colors.blue,
-      borderColor: colors.lightBlue,
-    },
     deleteContainer: {
       width: 30,
       height: 30,

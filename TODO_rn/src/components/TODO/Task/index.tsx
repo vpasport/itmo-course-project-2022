@@ -2,6 +2,7 @@ import React, {FC} from 'react';
 import {Pressable, Text, useColorScheme, View} from 'react-native';
 
 import {Task as TaskType} from '../';
+import {Checkbox} from '../../';
 import {useStyles} from '../useStyles';
 
 type TaskProps = {
@@ -16,11 +17,7 @@ const Task: FC<TaskProps> = ({task, onCheck, onDelete}) => {
 
   return (
     <View style={styles.main}>
-      <Pressable onPress={() => onCheck(!task.finish)}>
-        <View
-          style={[styles.checkbox, task.finish && styles.checkboxChecked]}
-        />
-      </Pressable>
+      <Checkbox onPress={() => onCheck(!task.finish)} selected={task.finish} />
       <Text style={styles.text}>{task.title}</Text>
       <Pressable onPress={() => onDelete()}>
         <View style={styles.deleteContainer}>
