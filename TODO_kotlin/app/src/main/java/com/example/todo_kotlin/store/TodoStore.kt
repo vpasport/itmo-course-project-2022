@@ -11,7 +11,6 @@ class TodoStore : Store<TodoModel>, ViewModel() {
 
     private val initState = TodoModel(listOf(), Visibility.All())
 
-
     override fun dispatch(action: Action) {
         state.value = reduce(state.value, action)
     }
@@ -47,6 +46,9 @@ class TodoStore : Store<TodoModel>, ViewModel() {
             )
             is RemoveTodos -> newState.copy(
                 todos = mutableListOf<Todo>()
+            )
+            is TestData5000 -> newState.copy(
+                todos = action.list
             )
         }
     }

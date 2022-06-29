@@ -50,31 +50,36 @@ export type Task = {
   finish: boolean;
 };
 
+// const defaultTasks: Array<Task> = [
+//   {
+//     title: 'Task 1',
+//     finish: false,
+//   },
+//   {
+//     title: 'Task 2',
+//     finish: false,
+//   },
+//   {
+//     title: 'Task 3',
+//     finish: false,
+//   },
+//   {
+//     title: 'Task 4',
+//     finish: false,
+//   },
+//   {
+//     title: 'Task 5',
+//     finish: false,
+//   },
+//   {
+//     title: 'Task 6',
+//     finish: true,
+//   },
+// ];
+
 const defaultTasks: Array<Task> = [
-  {
-    title: 'Task 1',
-    finish: false,
-  },
-  {
-    title: 'Task 2',
-    finish: false,
-  },
-  {
-    title: 'Task 3',
-    finish: false,
-  },
-  {
-    title: 'Task 4',
-    finish: false,
-  },
-  {
-    title: 'Task 5',
-    finish: false,
-  },
-  {
-    title: 'Task 6',
-    finish: true,
-  },
+  ...Array<Task>(2500).fill({title: 'Task', finish: false}),
+  ...Array<Task>(2500).fill({title: 'Task', finish: false}),
 ];
 
 const TODO: React.FC<Props> = () => {

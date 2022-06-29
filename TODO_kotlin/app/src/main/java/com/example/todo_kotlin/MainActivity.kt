@@ -22,33 +22,20 @@ class MainActivity : AppCompatActivity(), Renderer<TodoModel> {
     private lateinit var finishedListView: RecyclerView
     private lateinit var addButton: ImageView
     private lateinit var addText: EditText
-    private lateinit var rec: RecyclerView
 
     override fun render(model: LiveData<TodoModel>) {
         model.observe(this, Observer { newState ->
-//            notFinishedListView.adapter = TodoAdapter(
-//                this,
-//                (newState?.todos?.filter { !it.finished } ?: listOf()) as ArrayList<Todo>,
-//                { todo -> toggleTodo(todo) },
-//                { todo -> deleteTodo(todo) }
-//            )
             notFinishedListView.adapter =
                 CustomRecyclerAdapter(
                     (newState?.todos?.filter { !it.finished }
-                        ?: listOf()) as List<Todo>,
+                        ?: listOf()),
                     { todo -> toggleTodo(todo) },
                     { todo -> deleteTodo(todo) })
             finishedListView.adapter =
                 CustomRecyclerAdapter((newState?.todos?.filter { it.finished }
-                    ?: listOf()) as List<Todo>,
+                    ?: listOf()),
                     { todo -> toggleTodo(todo) },
                     { todo -> deleteTodo(todo) })
-//            finishedListView.adapter = TodoAdapter(
-//                this,
-//                (newState?.todos?.filter { it.finished } ?: listOf()) as ArrayList<Todo>,
-//                { todo -> toggleTodo(todo) },
-//                { todo -> deleteTodo(todo) }
-//            )
         })
     }
 
@@ -89,12 +76,23 @@ class MainActivity : AppCompatActivity(), Renderer<TodoModel> {
 
         store.dispatch(RemoveTodos())
 
-        store.dispatch(AddTodo("Task 1"))
-        store.dispatch(AddTodo("Task 2"))
-        store.dispatch(AddTodo("Task 3"))
-        store.dispatch(AddTodo("Task 4"))
-        store.dispatch(AddTodo("Task 5"))
-        store.dispatch(AddFinishedTodo("Task 6"))
+        val list = ArrayList<Todo>()
+
+        for (i in 0..5000) {
+            if (i < 2500) {
+                list.add(Todo("Task", false, i.toLong()))
+            } else {
+                list.add(Todo("Task", true, i.toLong()))
+            }
+        }
+
+        store.dispatch(TestData5000(list))
+//        store.dispatch(AddTodo("Task 1"))
+//        store.dispatch(AddTodo("Task 2"))
+//        store.dispatch(AddTodo("Task 3"))
+//        store.dispatch(AddTodo("Task 4"))
+//        store.dispatch(AddTodo("Task 5"))
+//        store.dispatch(AddFinishedTodo("Task 6"))
 
         addButton.setOnClickListener { _ ->
             if (addText.text.toString().isNotEmpty()) {

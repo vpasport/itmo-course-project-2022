@@ -15,14 +15,17 @@ class Task {
 }
 
 class _TodoListState extends State<TodoList> {
-  final List<Task> _todos = <Task>[
-    Task(title: 'task 1', finished: false),
-    Task(title: 'task 2', finished: false),
-    Task(title: 'task 3', finished: false),
-    Task(title: 'task 4', finished: false),
-    Task(title: 'task 5', finished: false),
-    Task(title: 'task 6', finished: true),
-  ];
+  // final List<Task> _todos = <Task>[
+  //   Task(title: 'task 1', finished: false),
+  //   Task(title: 'task 2', finished: false),
+  //   Task(title: 'task 3', finished: false),
+  //   Task(title: 'task 4', finished: false),
+  //   Task(title: 'task 5', finished: false),
+  //   Task(title: 'task 6', finished: true),
+  // ];
+  final List<Task> _todos =
+      List.filled(2500, Task(title: 'task', finished: false), growable: true)
+        ..addAll(List.filled(2500, Task(title: 'task', finished: true)));
 
   void _handleChange(Task task) {
     setState(() {
