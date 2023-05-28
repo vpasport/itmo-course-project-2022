@@ -1,0 +1,10 @@
+<div class="task">
+  <div class="task-text">
+    <ion-checkbox (ionChange)="onChecked()" checked="{{task.finish}}" class="task-text-checkbox"
+      labelPlacement="end"></ion-checkbox>
+    <p class="task-text-label">{{task.title}}</p>
+  </div>
+  <ion-button fill="clear" size="small" (click)="onClick()" aria-label="trash">
+    <ion-icon name="trash" class="task-trash" aria-hidden="true"></ion-icon>
+  </ion-button>
+</div>

@@ -1,0 +1,9 @@
+<div class="task">
+  <div class="task-text">
+    <ion-button fill="clear" size="small" (click)="onAdd()" aria-label="trash">
+      <ion-icon name="add-circle-outline" aria-hidden="true"></ion-icon>
+    </ion-button>
+    <ion-input type="text" aria-label="New task" color="primary" placeholder="Введите название"
+      [(ngModel)]="value"></ion-input>
+  </div>
+</div>

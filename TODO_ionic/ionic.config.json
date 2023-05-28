@@ -1,0 +1,8 @@
+{
+  "name": "TODO_ionic",
+  "integrations": {
+    "capacitor": {},
+    "cordova": {}
+  },
+  "type": "angular"
+}

@@ -1,0 +1,17 @@
+<ion-content [fullscreen]="true">
+  <ion-refresher slot="fixed" (ionRefresh)="refresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  <div class="main">
+    <h3>Задачи:</h3>
+    <app-task *ngFor="let task of getNotFinishedTasks()" [onTrashClick]="removeTask()" [onTaskChecked]="finishedTask()"
+      [task]="task"></app-task>
+    <app-task-new [onTaskAdd]="addTask()"></app-task-new>
+
+    <h3>Выполнено:</h3>
+    <app-task *ngFor="let task of getFinishedTasks()" [onTrashClick]="removeTask()" [onTaskChecked]="finishedTask()"
+      [task]="task"></app-task>
+
+  </div>
+</ion-content>

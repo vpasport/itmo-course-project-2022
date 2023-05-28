@@ -8,7 +8,8 @@
     "start": "react-native start",
     "test": "jest",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
-    "clean-android": "cd android && gradlew clean"
+    "clean-android": "cd android && ./gradlew clean",
+    "build-android": "cd android && ./gradlew assembleRelease"
   },
   "dependencies": {
     "react": "17.0.2",

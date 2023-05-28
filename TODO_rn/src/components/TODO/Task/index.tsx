@@ -19,7 +19,7 @@ const Task: FC<TaskProps> = ({task, onCheck, onDelete}) => {
     <View style={styles.main}>
       <Checkbox onPress={() => onCheck(!task.finish)} selected={task.finish} />
       <Text style={styles.text}>{task.title}</Text>
-      <Pressable onPress={() => onDelete()}>
+      <Pressable onPress={onDelete}>
         <View style={styles.deleteContainer}>
           <Text style={styles.delete}>+</Text>
         </View>

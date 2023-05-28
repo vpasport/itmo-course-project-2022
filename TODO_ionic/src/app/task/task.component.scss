@@ -1,0 +1,22 @@
+.task {
+  width: 100%;
+  display: flex;
+  background-color: var(--gray);
+  padding: 15px 15px;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  border-radius: 10px;
+
+  &-text {
+    flex: 1;
+    gap: 10px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+
+  &-trash {
+    fill: var(--red);
+  }
+}
